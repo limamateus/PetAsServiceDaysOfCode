@@ -26,12 +26,14 @@ namespace PetAsServiceDaysOfCode
             pOriginal.Controls.Add(buscaRacas);
             pOriginal.Show();
 
-            //if (buscaRacas.abrirListaDeFavoritos == true)
-            //{
-            //    pOriginal.Controls.Clear();
-            //    pOriginal.Controls.Add(listaDeFavoritosUC);
+           
+        }
 
-            //}
+        private void meusFavoritosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pOriginal.Controls.Clear();
+            pOriginal.Controls.Add(listaDeFavoritosUC);
+            pOriginal.Show();
         }
     }
 }

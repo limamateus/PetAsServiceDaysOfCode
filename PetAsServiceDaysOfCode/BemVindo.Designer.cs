@@ -57,12 +57,18 @@
             // meusFavoritosToolStripMenuItem
             // 
             this.meusFavoritosToolStripMenuItem.Name = "meusFavoritosToolStripMenuItem";
-            this.meusFavoritosToolStripMenuItem.Size = new System.Drawing.Size(96, 20);
-            this.meusFavoritosToolStripMenuItem.Text = "MeusFavoritos";
+            this.meusFavoritosToolStripMenuItem.Size = new System.Drawing.Size(99, 20);
+            this.meusFavoritosToolStripMenuItem.Text = "Meus Favoritos";
+            this.meusFavoritosToolStripMenuItem.Click += new System.EventHandler(this.meusFavoritosToolStripMenuItem_Click);
             // 
             // pOriginal
             // 
-            this.pOriginal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pOriginal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pOriginal.AutoScroll = true;
+            this.pOriginal.AutoSize = true;
+            this.pOriginal.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pOriginal.Location = new System.Drawing.Point(0, 24);
             this.pOriginal.Name = "pOriginal";
             this.pOriginal.Size = new System.Drawing.Size(800, 426);
@@ -78,6 +84,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "BemVindo";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bem Vindo ao Cat As Serices";
             this.Load += new System.EventHandler(this.BemVindo_Load);

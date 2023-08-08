@@ -2,6 +2,7 @@
 using PetAsServiceDaysOfCode.EndPoints.Breeds;
 using PetAsServiceDaysOfCode.EndPoints.Categories;
 using PetAsServiceDaysOfCode.EndPoints.Favourites;
+using PetAsServiceDaysOfCode.EndPoints.Images;
 using PetAsServiceDaysOfCode.Models;
 
 
@@ -15,7 +16,11 @@ namespace PetAsServiceDaysOfCode
         public Breeds breeds = new Breeds();
 
         public Favourites favourites = new Favourites();
+
+        public Images images = new Images();
         public List<Breed> ListaDeBreends { get; set; }
+
+        public Breed Breed { get; set; }
 
         public bool abrirListaDeFavoritos = false;
 
@@ -62,7 +67,8 @@ namespace PetAsServiceDaysOfCode
 
                 foreach (var breend in ListaDeBreends)
                 {
-                    CB.Items.Add(breend.Name);                  
+                    CB.Items.Add(breend.Name);  
+                    
                    
                 }
 
@@ -75,11 +81,11 @@ namespace PetAsServiceDaysOfCode
         {
             var xSelecionado = CB.SelectedItem;
 
-            var xConsultarNaLista = ListaDeBreends.Find(x => x.Name == xSelecionado);
+            this.Breed = ListaDeBreends.Find(x => x.Name == xSelecionado);
 
             var body = new PostFavorite()
             {
-                Image_Id = xConsultarNaLista.Reference_Image_Id,
+                Image_Id = this.Breed.Reference_Image_Id,
                 Sub_Id = "Testes"
 
             };
@@ -97,17 +103,49 @@ namespace PetAsServiceDaysOfCode
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            var xQuestionamento = MessageBox.Show("Deseja ir para lista de Favoritos", "Pergunta", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-
-            if (xQuestionamento.ToString() == "OK")
-            {
-                abrirListaDeFavoritos = true;
-                ListaDeFavoritosUC listaDeFavoritosUC = new ListaDeFavoritosUC();
-                this.Controls.Clear();
-                this.Controls.Add(listaDeFavoritosUC);
-              
-            }
+                
             
         }
+
+        private async void CB_SelectedValueChanged(object sender, EventArgs e)
+        {
+            var xSelecionado = CB.SelectedItem;
+
+            this.Breed = ListaDeBreends.Find(x => x.Name == xSelecionado);
+
+            txtTemperament.Text = this.Breed.Temperament;
+
+            txtOrigem.Text = this.Breed.Origin;
+
+            txtDescricao.Text = this.Breed.Description;
+
+            try
+            {
+                var xRetornoImagem = await images.GetById(this.Breed.Reference_Image_Id);
+
+                if (xRetornoImagem.Url != null)
+                {
+                    var xImagem = await util.BaixarImagem(xRetornoImagem.Url.ToString());
+                    pictureBox1.Image.Dispose();
+                    pictureBox1.Image = xImagem.Image;
+                    pictureBox1.Show();
+                    
+                }
+            }
+            catch (Exception error)
+            {
+
+                MessageBox.Show("Erro ao realizar ao baixar a imagem");
+            }
+
+           
+
+
+
+
+
+        }
+
+        
     }
 }
