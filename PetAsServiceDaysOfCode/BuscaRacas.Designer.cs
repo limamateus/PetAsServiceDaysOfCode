@@ -33,15 +33,14 @@
             this.lbTitulo = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.gBOrigem = new System.Windows.Forms.GroupBox();
+            this.txtOrigem = new System.Windows.Forms.TextBox();
             this.gBDescricao = new System.Windows.Forms.GroupBox();
             this.gBTemperament = new System.Windows.Forms.GroupBox();
+            this.txtTemperament = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.CB = new System.Windows.Forms.ComboBox();
             this.lb1 = new System.Windows.Forms.Label();
             this.btnFavoritar = new System.Windows.Forms.Button();
-            this.btnBuscar = new System.Windows.Forms.Button();
-            this.txtTemperament = new System.Windows.Forms.TextBox();
-            this.txtOrigem = new System.Windows.Forms.TextBox();
             this.txtDescricao = new System.Windows.Forms.TextBox();
             this.gBTexto.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -116,10 +115,23 @@
             this.gBOrigem.TabStop = false;
             this.gBOrigem.Text = "Origem";
             // 
+            // txtOrigem
+            // 
+            this.txtOrigem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtOrigem.Enabled = false;
+            this.txtOrigem.Location = new System.Drawing.Point(17, 17);
+            this.txtOrigem.Multiline = true;
+            this.txtOrigem.Name = "txtOrigem";
+            this.txtOrigem.Size = new System.Drawing.Size(456, 23);
+            this.txtOrigem.TabIndex = 1;
+            // 
             // gBDescricao
             // 
             this.gBDescricao.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.gBDescricao.Controls.Add(this.txtDescricao);
+            this.gBDescricao.Enabled = false;
             this.gBDescricao.Location = new System.Drawing.Point(31, 186);
             this.gBDescricao.Name = "gBDescricao";
             this.gBDescricao.Size = new System.Drawing.Size(491, 58);
@@ -137,6 +149,18 @@
             this.gBTemperament.TabIndex = 12;
             this.gBTemperament.TabStop = false;
             this.gBTemperament.Text = "Temperament";
+            // 
+            // txtTemperament
+            // 
+            this.txtTemperament.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTemperament.Enabled = false;
+            this.txtTemperament.Location = new System.Drawing.Point(17, 22);
+            this.txtTemperament.Multiline = true;
+            this.txtTemperament.Name = "txtTemperament";
+            this.txtTemperament.Size = new System.Drawing.Size(456, 23);
+            this.txtTemperament.TabIndex = 0;
             // 
             // pictureBox1
             // 
@@ -171,63 +195,35 @@
             // 
             // btnFavoritar
             // 
-            this.btnFavoritar.Location = new System.Drawing.Point(636, 388);
+            this.btnFavoritar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnFavoritar.Image = global::PetAsServiceDaysOfCode.Properties.Resources.love;
+            this.btnFavoritar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnFavoritar.Location = new System.Drawing.Point(600, 380);
             this.btnFavoritar.Name = "btnFavoritar";
-            this.btnFavoritar.Size = new System.Drawing.Size(103, 23);
+            this.btnFavoritar.Size = new System.Drawing.Size(85, 31);
             this.btnFavoritar.TabIndex = 18;
-            this.btnFavoritar.Text = "btnFavoritar";
+            this.btnFavoritar.Text = "Favoritar";
+            this.btnFavoritar.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnFavoritar.UseVisualStyleBackColor = true;
             this.btnFavoritar.Click += new System.EventHandler(this.btnFavoritar_Click);
-            // 
-            // btnBuscar
-            // 
-            this.btnBuscar.Location = new System.Drawing.Point(498, 388);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(100, 23);
-            this.btnBuscar.TabIndex = 17;
-            this.btnBuscar.Text = "btnBuscar";
-            this.btnBuscar.UseVisualStyleBackColor = true;
-            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
-            // 
-            // txtTemperament
-            // 
-            this.txtTemperament.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTemperament.Location = new System.Drawing.Point(17, 22);
-            this.txtTemperament.Multiline = true;
-            this.txtTemperament.Name = "txtTemperament";
-            this.txtTemperament.Size = new System.Drawing.Size(456, 23);
-            this.txtTemperament.TabIndex = 0;
-            // 
-            // txtOrigem
-            // 
-            this.txtOrigem.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtOrigem.Location = new System.Drawing.Point(17, 17);
-            this.txtOrigem.Multiline = true;
-            this.txtOrigem.Name = "txtOrigem";
-            this.txtOrigem.Size = new System.Drawing.Size(456, 23);
-            this.txtOrigem.TabIndex = 1;
             // 
             // txtDescricao
             // 
             this.txtDescricao.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtDescricao.Enabled = false;
             this.txtDescricao.Location = new System.Drawing.Point(17, 18);
             this.txtDescricao.Multiline = true;
             this.txtDescricao.Name = "txtDescricao";
             this.txtDescricao.Size = new System.Drawing.Size(456, 23);
-            this.txtDescricao.TabIndex = 1;
+            this.txtDescricao.TabIndex = 2;
             // 
             // BuscaRacas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnFavoritar);
-            this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.gBTexto);
             this.Name = "BuscaRacas";
@@ -258,12 +254,11 @@
         private Label lb1;
         private PictureBox pictureBox1;
         private Button btnFavoritar;
-        private Button btnBuscar;
         private GroupBox gBTemperament;
         private GroupBox gBOrigem;
         private GroupBox gBDescricao;
         private TextBox txtOrigem;
-        private TextBox txtDescricao;
         private TextBox txtTemperament;
+        private TextBox txtDescricao;
     }
 }

@@ -43,7 +43,7 @@
             this.LV.TabIndex = 0;
             this.LV.UseCompatibleStateImageBehavior = false;
             this.LV.View = System.Windows.Forms.View.List;
-            this.LV.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LV_ColumnClick);
+            this.LV.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.LV_ColumnClick);          
             this.LV.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LV_MouseClick);
             // 
             // pictureBox1

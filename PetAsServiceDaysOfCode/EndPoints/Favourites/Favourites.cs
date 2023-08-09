@@ -83,8 +83,14 @@ namespace PetAsServiceDaysOfCode.EndPoints.Favourites
 
                 if (xRetorno != null)
                 {
-                    conteudo = await xRetorno.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<ResponsePostFavorite>(conteudo);
+                    if (xRetorno.IsSuccessStatusCode)
+                    {
+                        conteudo = await xRetorno.Content.ReadAsStringAsync();
+                        return JsonConvert.DeserializeObject<ResponsePostFavorite>(conteudo);
+                    }
+
+                    MessageBox.Show($"Ouve um erro ao favoritar: {conteudo}", "Erro");
+                    return null;
                 }
 
                 return null;
@@ -92,7 +98,7 @@ namespace PetAsServiceDaysOfCode.EndPoints.Favourites
             }
             catch (Exception error)
             {
-
+                MessageBox.Show($"Ouve um erro ao favoritar: {error.Message}", "Erro");
                 return null;
             }
 

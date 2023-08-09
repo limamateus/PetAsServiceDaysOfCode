@@ -10,7 +10,7 @@ namespace PetAsServiceDaysOfCode
 {
     public partial class BuscaRacas : UserControl
     {
-        public Util util = new Util();      
+        public Util util = new Util();
 
 
         public Breeds breeds = new Breeds();
@@ -60,16 +60,16 @@ namespace PetAsServiceDaysOfCode
 
             CB.Text = "Seleciona uma Raça";
 
-            ListaDeBreends = await breeds.Get();        
+            ListaDeBreends = await breeds.Get();
 
             if (ListaDeBreends != null)
             {
 
                 foreach (var breend in ListaDeBreends)
                 {
-                    CB.Items.Add(breend.Name);  
-                    
-                   
+                    CB.Items.Add(breend.Name);
+
+
                 }
 
             }
@@ -77,34 +77,57 @@ namespace PetAsServiceDaysOfCode
 
         }
 
-        private void btnFavoritar_Click(object sender, EventArgs e)
+        private async void btnFavoritar_Click(object sender, EventArgs e)
         {
+          
+
             var xSelecionado = CB.SelectedItem;
 
-            this.Breed = ListaDeBreends.Find(x => x.Name == xSelecionado);
+            var xResultadoDaConsulta = await BreedExiste(xSelecionado.ToString());
 
-            var body = new PostFavorite()
+            if (xResultadoDaConsulta == true)
             {
-                Image_Id = this.Breed.Reference_Image_Id,
-                Sub_Id = "Testes"
+                var body = new PostFavorite()
+                {
+                    Image_Id = this.Breed.Reference_Image_Id,
+                    Sub_Id = "Testes"
 
-            };
+                };
+                try
+                {
+                    var xRet = await favourites.Post(body);
+                    if (xRet != null)
+                    {
+                        MessageBox.Show($"{this.Breed.Name} foi favoritado com sucesso!", "Sucesso");
+                    }
+                }
+                catch (Exception error)
+                {
 
-
-            var xRet = favourites.Post(body);
-
-            if(xRet == null)
+                    MessageBox.Show($"Ouve um erro ao favoritar: {error.Message}", "Erro");
+                }
+            }
+            else
             {
-                MessageBox.Show("Ouve um erro ao favoritar", "Erro");
+                MessageBox.Show($"{xSelecionado} já está na lista de favoritos!");
             }
 
-            
+
         }
 
-        private void btnBuscar_Click(object sender, EventArgs e)
+        public async Task<bool> BreedExiste(string breendName)
         {
-                
-            
+            ListaDeBreends = await breeds.Get();
+
+            this.Breed =  ListaDeBreends.FirstOrDefault(x => x.Name == breendName);
+
+            var xVerificacao = ListaDeBreends.FirstOrDefault(x => x.Name == breendName);
+
+            if (xVerificacao != null)
+            {
+                return false;
+            }
+            return true;
         }
 
         private async void CB_SelectedValueChanged(object sender, EventArgs e)
@@ -119,6 +142,8 @@ namespace PetAsServiceDaysOfCode
 
             txtDescricao.Text = this.Breed.Description;
 
+
+
             try
             {
                 var xRetornoImagem = await images.GetById(this.Breed.Reference_Image_Id);
@@ -129,7 +154,7 @@ namespace PetAsServiceDaysOfCode
                     pictureBox1.Image.Dispose();
                     pictureBox1.Image = xImagem.Image;
                     pictureBox1.Show();
-                    
+
                 }
             }
             catch (Exception error)
@@ -138,7 +163,7 @@ namespace PetAsServiceDaysOfCode
                 MessageBox.Show("Erro ao realizar ao baixar a imagem");
             }
 
-           
+
 
 
 
@@ -146,6 +171,6 @@ namespace PetAsServiceDaysOfCode
 
         }
 
-        
+
     }
 }

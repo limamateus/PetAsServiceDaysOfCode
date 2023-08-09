@@ -13,10 +13,9 @@ namespace PetAsServiceDaysOfCode
 
         private void BemVindo_Load(object sender, EventArgs e)
         {
-           
+
 
             pOriginal.Controls.Add(telaDeBemVindoUC);
-
             pOriginal.Show();
         }
 

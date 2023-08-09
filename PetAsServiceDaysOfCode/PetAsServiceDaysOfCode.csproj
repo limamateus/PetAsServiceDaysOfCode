@@ -28,6 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="EndPoints\Images\icons8-favorito-48.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Gifs\cat.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

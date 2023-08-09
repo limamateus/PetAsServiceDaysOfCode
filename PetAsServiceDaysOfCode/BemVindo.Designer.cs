@@ -68,7 +68,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pOriginal.AutoScroll = true;
             this.pOriginal.AutoSize = true;
-            this.pOriginal.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pOriginal.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pOriginal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pOriginal.Location = new System.Drawing.Point(0, 24);
             this.pOriginal.Name = "pOriginal";
             this.pOriginal.Size = new System.Drawing.Size(800, 426);
@@ -78,13 +79,18 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.pOriginal);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
+            this.MdiChildrenMinimizedAnchorBottom = false;
+            this.MinimizeBox = false;
             this.Name = "BemVindo";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
+            this.RightToLeftLayout = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bem Vindo ao Cat As Serices";
             this.Load += new System.EventHandler(this.BemVindo_Load);
@@ -100,6 +106,6 @@
         private MenuStrip menuStrip1;
         private ToolStripMenuItem buscarRaçasToolStripMenuItem;
         private ToolStripMenuItem meusFavoritosToolStripMenuItem;
-        private Panel pOriginal;
+        public Panel pOriginal;
     }
 }

@@ -77,30 +77,36 @@ namespace PetAsServiceDaysOfCode
         {
             try
             {
-                var xSelecionado = LV.SelectedItems; // Preciso melhora essa logica.
 
-
-                this.breend = listaDeBreends.Find(x => x.Name == xSelecionado.ToString());
-
-                var xRetornoImagem = await images.GetById(this.breend.Reference_Image_Id); ;
-
-                if (xRetornoImagem.Url != null)
+                if (LV.SelectedItems.Count > 0)
                 {
-                    var xImagem = await util.BaixarImagem(xRetornoImagem.Url.ToString());
+                    this.breend = listaDeBreends.Find(x => x.Name == LV.FocusedItem.Text);
 
-                    try
+                    if (this.breend != null)
                     {
-                        pictureBox1.Image.Dispose();
-                        pictureBox1.Image = xImagem.Image;
-                        pictureBox1.Show();
-                    }
-                    catch (Exception )
-                    {
-                        pictureBox1.Image = xImagem.Image;
-                        pictureBox1.Show();
+                        var xRetornoImagem = await images.GetById(this.breend.Reference_Image_Id); ;
 
+                        if (xRetornoImagem.Url != null)
+                        {
+                            var xImagem = await util.BaixarImagem(xRetornoImagem.Url.ToString());
+
+                            try
+                            {
+                                pictureBox1.Image.Dispose();
+                                pictureBox1.Image = xImagem.Image;
+                                pictureBox1.Show();
+                            }
+                            catch (Exception)
+                            {
+                                pictureBox1.Image = xImagem.Image;
+                                pictureBox1.Show();
+
+                            }
+                        }
                     }
+                    
                 }
+                
             }
             catch (Exception error)
             {
@@ -108,5 +114,7 @@ namespace PetAsServiceDaysOfCode
                 MessageBox.Show("Erro ao realizar ao baixar a imagem");
             }
         }
+
+        
     }
 }
