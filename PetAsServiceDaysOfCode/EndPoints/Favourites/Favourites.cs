@@ -41,7 +41,7 @@ namespace PetAsServiceDaysOfCode.EndPoints.Favourites
             http.InicializaClient();
             try
             {
-                var xRetorno = await http._client.GetAsync($"v1/favourites/:{favourite_id}");
+                var xRetorno = await http._client.GetAsync($"v1/favourites/{favourite_id}");
 
                 if (xRetorno != null)
                 {
@@ -67,30 +67,31 @@ namespace PetAsServiceDaysOfCode.EndPoints.Favourites
         {
 
             http.InicializaClient();
-
             try
             {
 
                 var url = "v1/favourites";
 
-               
                 var xRetorno = await http._client.PostAsync(url, new StringContent(
-                    JsonConvert.SerializeObject( new{ 
+                    JsonConvert.SerializeObject(new
+                    {
                         image_id = body.Image_Id,
                         sub_id = body.Sub_Id
 
-                }), Encoding.UTF8, "application/json"));;
+                    }), Encoding.UTF8, "application/json")); ;
 
                 if (xRetorno != null)
                 {
-                    if (xRetorno.IsSuccessStatusCode)
+                    conteudo = await xRetorno.Content.ReadAsStringAsync();
+
+                    if (!xRetorno.IsSuccessStatusCode)
                     {
-                        conteudo = await xRetorno.Content.ReadAsStringAsync();
-                        return JsonConvert.DeserializeObject<ResponsePostFavorite>(conteudo);
+                        MessageBox.Show($"{conteudo}", $"{xRetorno.StatusCode}");
+                        return null;
                     }
 
-                    MessageBox.Show($"Ouve um erro ao favoritar: {conteudo}", "Erro");
-                    return null;
+                    return JsonConvert.DeserializeObject<ResponsePostFavorite>(conteudo);
+
                 }
 
                 return null;
@@ -113,7 +114,7 @@ namespace PetAsServiceDaysOfCode.EndPoints.Favourites
             {
                 http.InicializaClient();
 
-                var xRetorno = await http._client.DeleteAsync($"v1/favourites/:{favourite_id}");
+                var xRetorno = await http._client.DeleteAsync($"v1/favourites/{favourite_id}");
 
                 if (xRetorno.IsSuccessStatusCode)
                 {

@@ -13,26 +13,26 @@ namespace PetAsServiceDaysOfCode
 
         private void BemVindo_Load(object sender, EventArgs e)
         {
-
-
             pOriginal.Controls.Add(telaDeBemVindoUC);
             pOriginal.Show();
         }
 
         private void buscarRaçasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            pOriginal.Controls.Clear();          
+            pOriginal.Controls.Clear();
             pOriginal.Controls.Add(buscaRacas);
             pOriginal.Show();
 
-           
+
         }
 
         private void meusFavoritosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             pOriginal.Controls.Clear();
-            pOriginal.Controls.Add(listaDeFavoritosUC);
+            pOriginal.Controls.Add(listaDeFavoritosUC);           
             pOriginal.Show();
         }
+
+       
     }
 }

@@ -12,7 +12,6 @@ namespace PetAsServiceDaysOfCode
     {
         public Util util = new Util();
 
-
         public Breeds breeds = new Breeds();
 
         public Favourites favourites = new Favourites();
@@ -79,7 +78,6 @@ namespace PetAsServiceDaysOfCode
 
         private async void btnFavoritar_Click(object sender, EventArgs e)
         {
-          
 
             var xSelecionado = CB.SelectedItem;
 
@@ -100,48 +98,45 @@ namespace PetAsServiceDaysOfCode
                     {
                         MessageBox.Show($"{this.Breed.Name} foi favoritado com sucesso!", "Sucesso");
                     }
+
                 }
                 catch (Exception error)
                 {
 
-                    MessageBox.Show($"Ouve um erro ao favoritar: {error.Message}", "Erro");
+                    MessageBox.Show($"{error.Message}", "Erro");
                 }
             }
-            else
-            {
-                MessageBox.Show($"{xSelecionado} já está na lista de favoritos!");
-            }
+            
 
 
         }
 
         public async Task<bool> BreedExiste(string breendName)
         {
-            ListaDeBreends = await breeds.Get();
+            var list = await BuscarListaDeBreeds();          
 
-            this.Breed =  ListaDeBreends.FirstOrDefault(x => x.Name == breendName);
-
-            var xVerificacao = ListaDeBreends.FirstOrDefault(x => x.Name == breendName);
+            var xVerificacao = list.FirstOrDefault(x => x.Name == breendName);
 
             if (xVerificacao != null)
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
 
         private async void CB_SelectedValueChanged(object sender, EventArgs e)
         {
             var xSelecionado = CB.SelectedItem;
 
-            this.Breed = ListaDeBreends.Find(x => x.Name == xSelecionado);
+            var list = await BuscarListaDeBreeds();
+
+            this.Breed = list.Find(x => x.Name == xSelecionado.ToString());          
 
             txtTemperament.Text = this.Breed.Temperament;
 
             txtOrigem.Text = this.Breed.Origin;
 
             txtDescricao.Text = this.Breed.Description;
-
 
 
             try
@@ -164,10 +159,12 @@ namespace PetAsServiceDaysOfCode
             }
 
 
+        }
 
 
-
-
+        private async Task<List<Breed>> BuscarListaDeBreeds()
+        {
+           return ListaDeBreends = await breeds.Get();
 
         }
 
