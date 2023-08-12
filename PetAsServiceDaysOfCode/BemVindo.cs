@@ -11,28 +11,46 @@ namespace PetAsServiceDaysOfCode
             InitializeComponent();
         }
 
-        private void BemVindo_Load(object sender, EventArgs e)
+        public void BemVindo_Load(object sender, EventArgs e)
+        {
+            CarregarTelaDeBemVindo();
+        }
+
+
+        private void buscarRaçasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CarregarTelaDeBuscaRaca();
+        }
+
+        private void meusFavoritosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CarregarTelaDeFavoritos();
+        }
+
+
+        private void CarregarTelaDeBemVindo()
         {
             pOriginal.Controls.Add(telaDeBemVindoUC);
             pOriginal.Show();
         }
-
-        private void buscarRaçasToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CarregarTelaDeBuscaRaca()
         {
             pOriginal.Controls.Clear();
             pOriginal.Controls.Add(buscaRacas);
             pOriginal.Show();
 
+            if (buscaRacas.Resposta == false)
+            {
+                CarregarTelaDeBemVindo();
+            }
 
         }
-
-        private void meusFavoritosToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CarregarTelaDeFavoritos()
         {
             pOriginal.Controls.Clear();
-            pOriginal.Controls.Add(listaDeFavoritosUC);           
+            pOriginal.Controls.Add(listaDeFavoritosUC);
             pOriginal.Show();
         }
 
-       
     }
 }

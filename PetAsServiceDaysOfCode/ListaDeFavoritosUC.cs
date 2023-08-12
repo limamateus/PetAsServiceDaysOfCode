@@ -50,6 +50,7 @@ namespace PetAsServiceDaysOfCode
 
         public async void PreencheLista()
         {
+            
 
             listaDeFavorite = await favourites.Get();
 
@@ -59,9 +60,7 @@ namespace PetAsServiceDaysOfCode
 
             foreach (var item in listaDeFavorite)         
             {
-
-                this.breend = listaDeBreends.FirstOrDefault(p => p.Reference_Image_Id == item.Image_Id);
-              
+                this.breend = listaDeBreends.FirstOrDefault(p => p.Reference_Image_Id == item.Image_Id);              
 
                 if (this.breend != null)
                 {
@@ -78,10 +77,7 @@ namespace PetAsServiceDaysOfCode
                 }
 
 
-
             }
-           
-
 
 
         }
@@ -133,17 +129,25 @@ namespace PetAsServiceDaysOfCode
 
         private async void btnFavoritar_Click(object sender, EventArgs e)
         {
-            var xRetorno = await favourites.Delete(favoriteId);
-            if(xRetorno)
+            if (favoriteId != null)
             {
-              MessageBox.Show("Deletado com sucesso!");
-                PreencheLista();
-               
+                var xRetorno = await favourites.Delete(favoriteId);
+                if (xRetorno)
+                {
+                    MessageBox.Show("Deletado com sucesso!");
+                    PreencheLista();
+
+                }
+                else
+                {
+                    MessageBox.Show($"O Id {favoriteId}");
+                }
             }
             else
             {
-                MessageBox.Show($"O Id {favoriteId}");
+                MessageBox.Show("Selecione um Raça para favoritar", "Atenção!");
             }
+            
         }
     }
 }

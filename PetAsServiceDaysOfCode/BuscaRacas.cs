@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using PetAsServiceDaysOfCode.EndPoints.Breeds;
-using PetAsServiceDaysOfCode.EndPoints.Categories;
+﻿using PetAsServiceDaysOfCode.EndPoints.Breeds;
 using PetAsServiceDaysOfCode.EndPoints.Favourites;
 using PetAsServiceDaysOfCode.EndPoints.Images;
 using PetAsServiceDaysOfCode.Models;
@@ -23,6 +21,8 @@ namespace PetAsServiceDaysOfCode
 
         public bool abrirListaDeFavoritos = false;
 
+        public int QuantidadeDeTentativa { get; set; }
+        public bool Resposta { get; set; }
 
 
         public BuscaRacas()
@@ -30,13 +30,52 @@ namespace PetAsServiceDaysOfCode
             InitializeComponent();
         }
 
-        private void BuscaRacas_Load(object sender, EventArgs e)
+        private async void BuscaRacas_Load(object sender, EventArgs e)
         {
+
             CarregarGif();
+                      
             CarregarComboBox();
+          
+
         }
 
 
+
+        public void TentarCarregarComboBox()
+        {
+
+            if (ListaDeBreends == null)
+            {
+                var xQuestionamento = MessageBox.Show("Não foi possível realizar comunicação com Serviço de busca,Deseja tentar novamente?", "Erro", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                while (QuantidadeDeTentativa != 3)
+                {
+
+                    if (xQuestionamento.ToString() == "Yes")
+                    {
+                        CarregarComboBox();
+                        if (QuantidadeDeTentativa > 0)
+                        {
+                            MessageBox.Show("Não foi possível realizar comunicação com Serviço de busca,Deseja tentar novamente?", "Erro", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        }
+                        QuantidadeDeTentativa++;
+
+                    }
+                    else
+                    {
+                        QuantidadeDeTentativa = 3;
+                       
+                    }
+
+                   
+                }
+                this.Controls.Clear();
+                this.Dispose();
+                Resposta = false;
+                
+            }
+            
+        }
         public async void CarregarGif()
         {
             var xBuscarGif = await util.BuscarGif("gatinhoNoPC.gif");
@@ -58,21 +97,30 @@ namespace PetAsServiceDaysOfCode
         {
 
             CB.Text = "Seleciona uma Raça";
-
-            ListaDeBreends = await breeds.Get();
-
-            if (ListaDeBreends != null)
+            try
             {
+                ListaDeBreends = await breeds.Get();
 
-                foreach (var breend in ListaDeBreends)
+                if (ListaDeBreends != null)
                 {
-                    CB.Items.Add(breend.Name);
+                    foreach (var breend in ListaDeBreends)
+                    {
+                        CB.Items.Add(breend.Name);
 
+                    }
 
+                }
+                else
+                {
+                    TentarCarregarComboBox();
                 }
 
             }
+            catch (Exception error)
+            {
 
+                MessageBox.Show($"{error.Message}", "Error");
+            }
 
         }
 
@@ -81,39 +129,49 @@ namespace PetAsServiceDaysOfCode
 
             var xSelecionado = CB.SelectedItem;
 
-            var xResultadoDaConsulta = await BreedExiste(xSelecionado.ToString());
-
-            if (xResultadoDaConsulta == true)
+            try
             {
-                var body = new PostFavorite()
-                {
-                    Image_Id = this.Breed.Reference_Image_Id,
-                    Sub_Id = "Testes"
+                var xResultadoDaConsulta = await BreedExiste(xSelecionado.ToString());
 
-                };
-                try
+                if (xResultadoDaConsulta == true)
                 {
-                    var xRet = await favourites.Post(body);
-                    if (xRet != null)
+                    var body = new PostFavorite()
                     {
-                        MessageBox.Show($"{this.Breed.Name} foi favoritado com sucesso!", "Sucesso");
+                        Image_Id = this.Breed.Reference_Image_Id,
+                        Sub_Id = "Testes"
+
+                    };
+                    try
+                    {
+                        var xRet = await favourites.Post(body);
+                        if (xRet != null)
+                        {
+                            MessageBox.Show($"{this.Breed.Name} foi favoritado com sucesso!", "Sucesso");
+                        }
+
                     }
+                    catch (Exception error)
+                    {
 
-                }
-                catch (Exception error)
-                {
-
-                    MessageBox.Show($"{error.Message}", "Erro");
+                        MessageBox.Show($"{error.Message}", "Erro");
+                    }
                 }
             }
+            catch (Exception error)
+            {
+
+                MessageBox.Show($"É obrigatório a seleção de um raça antes de favoritar", "Error");
+            }
+
             
+
 
 
         }
 
         public async Task<bool> BreedExiste(string breendName)
         {
-            var list = await BuscarListaDeBreeds();          
+            var list = await BuscarListaDeBreeds();
 
             var xVerificacao = list.FirstOrDefault(x => x.Name == breendName);
 
@@ -130,7 +188,7 @@ namespace PetAsServiceDaysOfCode
 
             var list = await BuscarListaDeBreeds();
 
-            this.Breed = list.Find(x => x.Name == xSelecionado.ToString());          
+            this.Breed = list.Find(x => x.Name == xSelecionado.ToString());
 
             txtTemperament.Text = this.Breed.Temperament;
 
@@ -164,7 +222,7 @@ namespace PetAsServiceDaysOfCode
 
         private async Task<List<Breed>> BuscarListaDeBreeds()
         {
-           return ListaDeBreends = await breeds.Get();
+            return ListaDeBreends = await breeds.Get();
 
         }
 
